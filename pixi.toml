@@ -1,0 +1,55 @@
+[workspace]
+#authors = ["Julián C. <julian.gcastro@alumnos.upm.es>"]
+channels = ["conda-forge"]
+name = "tfm-format"
+platforms = ["linux-64"]
+version = "0.7.0"
+
+[activation.env]
+PATH = "$PATH:$HOME/.cargo/bin" # Add rust binaries compile to PATH
+FILE_NAME = "tfm"
+FONT_PATH = "include/fonts"
+EDITOR = "gvim"                 # It mustn't block when calling
+PDF_VISUALIZER = "open"         # You can change it if you use a different PDF viewer (opens with default PDF viewer)
+USING_SECTIONS = "true"         # Changing to false if you not use sections
+
+[tasks.compile]
+cmd = "typst compile --font-path \"$FONT_PATH\" main.typ \"$FILE_NAME.pdf\""
+description = "Make PDF file"
+
+[tasks.watch]
+cmd = "typst watch --font-path \"$FONT_PATH\" main.typ \"$FILE_NAME.pdf\""
+description = "Watch file to compile it again when a change has been done"
+
+[tasks.watch-pdf]
+description = "Open the pdf and watch it's changes"
+depends-on = ["open", "watch"]
+
+[tasks.watch-edit]
+description = "Open the source files, PDF and watch it's changes"
+depends-on = ["open", "edit", "watch"]
+
+[tasks.open]
+cmd = "$PDF_VISUALIZER \"$FILE_NAME.pdf\""
+description = "Open the pdf"
+
+[tasks.edit]
+cmd = "$USING_SECTIONS && $EDITOR sections/*.typ *.typ references.bib || $EDITOR main.typ *.typ references.bib"
+description = "Open files using selected editor"
+
+[tasks.start]
+cmd = "cargo install --locked typst-cli"
+description = "Install typst-cli rust package"
+
+[tasks.restart]
+cmd = "cargo install --force --locked typst-cli"
+description = "Force a reinstallation of typst-cli"
+
+#[tasks.typst]
+#cmd = "typst"
+#description = "Run typst"
+#depends-on = ["start"]
+
+[dependencies]
+rust = ">=1.94.0,<1.95"
+openssl = ">=3.6.1,<4"
