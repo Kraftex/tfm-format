@@ -1,5 +1,4 @@
 [workspace]
-#authors = ["Julián C. <julian.gcastro@alumnos.upm.es>"]
 channels = ["conda-forge"]
 name = "tfm-format"
 platforms = ["linux-64"]
