@@ -136,9 +136,16 @@
   }
 }
 
-// make-outline-entry
-#let make-outline-entry(label, body) = {
-  let filler = box(width: 1fr, repeat[.])
-  let content = body + " " + filler + counter(page).display()
-  block(link(label, strong(content)))
+// Inspiration using from: https://github.com/typst/typst/issues/2025
+#let check-file(path) = context {
+  let path-label = label(path)
+  let first-time = query((context {}).func()).len() == 0
+  if first-time or query(path-label).len() > 0 {
+    [#let x = read(path);#path-label]
+  }
+  else {
+    [
+      - Not found file #raw(path)
+    ]
+  }
 }

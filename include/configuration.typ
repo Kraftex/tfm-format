@@ -116,11 +116,45 @@
   post-extra-files: (),
   experimental: (
     annexe-show: false,
-    annexe-as-tag: false
+    annexe-as-tag: false,
+    check-exist-files: false
   ),
   // show-instructions: false, // TODO: Do it?
   body
 ) = {
+  // Error handling
+  //// Files exists?
+  if "check-exist-files" in experimental and experimental.check-exist-files {
+    let files = pre-extra-files
+    if type(files) == str {
+      files = (pre-extra-files, )
+    }
+    [
+      #for file in files {
+        check-file("../" + file)
+      }
+    ]
+    files = section-files
+    if type(files) == str {
+      files = (pre-extra-files, )
+    }
+    [
+      #for file in files {
+        check-file("../" + section-dir + "/" + file)
+      }
+    ]
+    files = post-extra-files
+    if type(files) == str {
+      files = (post-extra-files, )
+    }
+    [
+      #for file in files {
+        check-file("../" + file)
+      }
+    ]
+    return
+  }
+
   // Configuration I
   show link: set text(font: code-font)
   set math.equation(numbering: "(1)")
@@ -328,7 +362,7 @@
   show heading.where(level: 1): set heading(numbering: "A.", supplement: "Apéndice")
   counter(heading).update(0)
 
-  // Annexe entry to show up in the outline
+  // Annexe entry to show up in the table content
   let annexe-fallback = "annexe-as-tag" not in experimental or not experimental.annexe-as-tag
   annexe-fallback = annexe-fallback and "annexe-show" in experimental and experimental.annexe-show
   if annexe-fallback {
