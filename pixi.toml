@@ -5,7 +5,8 @@ platforms = ["linux-64"]
 version = "0.7.0"
 
 [activation.env]
-PATH = "$PATH:$HOME/.cargo/bin" # Add rust binaries compile to PATH
+## Uncomment this if you want to use your compiled typst
+#PATH = "$PATH:$HOME/.cargo/bin" # Add rust binaries compile to PATH
 FILE_NAME = "tfm"
 FONT_PATH = "include/fonts"
 EDITOR = "gvim"                 # It mustn't block when calling
@@ -36,19 +37,17 @@ description = "Open the pdf"
 cmd = "$USING_SECTIONS && $EDITOR sections/*.typ *.typ references.bib || $EDITOR main.typ *.typ references.bib"
 description = "Open files using selected editor"
 
-[tasks.start]
-cmd = "cargo install --locked typst-cli"
-description = "Install typst-cli rust package"
-
-[tasks.restart]
-cmd = "cargo install --force --locked typst-cli"
-description = "Force a reinstallation of typst-cli"
-
-#[tasks.typst]
-#cmd = "typst"
-#description = "Run typst"
-#depends-on = ["start"]
+## Uncomment this if you want to compile typst
+#[tasks.start]
+#cmd = "cargo install --locked typst-cli"
+#description = "Install typst-cli rust package"
+#
+#[tasks.restart]
+#cmd = "cargo install --force --locked typst-cli"
+#description = "Force a reinstallation of typst-cli"
 
 [dependencies]
-rust = ">=1.94.0,<1.95"
-openssl = ">=3.6.1,<4"
+## Uncomment this if you want to compile typst
+#rust = ">=1.94.0,<1.95"
+#openssl = ">=3.6.1,<4"
+typst = ">=0.14.2,<0.15"

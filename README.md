@@ -4,11 +4,11 @@ It uses Pixi for using Typst.
 
 ## How to start?
 ```bash
-# Start downloading and building the dependencies
-pixi run start
+# Start downloading dependencies
+pixi install
 ```
 
-After building typst you can run one of the following commands.
+After the installation you can run one of the following commands.
 ```bash
 # Most simple one, create PDF file (by default the name should be tfm.pdf)
 pixi run compile

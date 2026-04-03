@@ -204,7 +204,6 @@
       } else {
         block[
           #v(2.5cm)
-          //#text(size: 21pt)[#it.supplement #counter(heading).get().first()]
           #text(size: 21pt)[#it.supplement #inner-numbering(it.numbering, counter(heading).get().first())]
           #v(0.5cm)
         ]
