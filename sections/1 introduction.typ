@@ -46,7 +46,14 @@ import sympy as sy
 from sympy.abc import x
 ```
 
-#code-style(code-default-lines)[```
-# Anytime that you needed, you can overwrite how code it should display
-# You should use 'code-style' function
-```]
+#code-style(code-default-lines)[
+  #raw(block: true, "// Anytime that you needed, you can overwrite how code it should display
+// You should use 'code-style' function as follow:
+
+#code-style(code-style-to-use)[```
+// Your code comes here
+```]")
+]
+
+#figure(circle(), caption: [Círculo])
+#figure(square(), caption: [Cuadrado])

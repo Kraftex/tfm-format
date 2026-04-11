@@ -149,7 +149,3 @@
     ]
   }
 }
-
-#let wrtnums = ("cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez")
-#let num2wrt(num) = wrtnums.at(num)
-#let wrtcaps = context num2wrt(query(heading.where(supplement: [Capítulo], level: 1)).len())

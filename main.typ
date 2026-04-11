@@ -64,7 +64,15 @@
   //    Useful if you want to add your Acknowledgements
   pre-extra-files: (),
 
-  //TODO: Add a way to add more Content tables for other things like figures
+  // extra-outlines: A list of dictionaries with the keys of title, target or other argument for outline function
+  //    The following targets are useful:
+  //    - Para las imágenes:  figure.where(kind: image)
+  //    - Para las tablas:    figure.where(kind: table)
+  //extra-outlines: ( // Ejemplo
+  //  (title: [Índice de figuras], target: figure.where(kind: image)),
+  //  (title: [Índice de tablas], target: figure.where(kind: table)),
+  //),
+  
   // author-pretext: Pretext that introduce author name
   author-pretext: "Autor(a)",
 

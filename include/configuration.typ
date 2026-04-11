@@ -1,5 +1,6 @@
 // This is needed to do the headers easier
 #import "@preview/hydra:0.6.2": hydra
+#import "@preview/headcount:0.1.0": *
 #import "functions.typ": *
 
 #let upm-title-page(
@@ -73,7 +74,7 @@
       emph[Título:],
       to-string(title).replace("\n", " ").replace(regex("[ ]+"), " ")
     )
-    #date
+    #date.replace(regex("^\w"), m => upper(m.text))
   ]
 
   // Autor & Tutor
@@ -107,6 +108,8 @@
   title-page: upm-title-page,
   preface: upm-preface,
   pre-extra-files: (),
+  index-title: [Tabla de contenidos],
+  extra-outlines: (),
   author-pretext: "Autor(a)",
   tutor-pretext: "Tutor(a)",
   date: "<<mes año>>",
@@ -154,6 +157,9 @@
     ]
     return
   }
+  if type(extra-outlines) != array {
+    extra-outlines = (extra-outlines,)
+  }
 
   // Configuration I
   show link: set text(font: code-font)
@@ -164,6 +170,8 @@
   set document(title: title, author: (author, tutor))
   set text(lang: lang, font: text-font, size: 11pt)
   set page(paper: "a4", margin: (top: 3cm, bottom: 3cm, left: 2.54cm, right: 2.54cm))
+  show figure.where(kind: table): set figure.caption(position: top)
+  set figure(numbering: dependent-numbering("1.1"))
 
   // Code blocks
   show raw: set text(font: code-font, size: 11pt)
@@ -192,6 +200,11 @@
   counter(page).update(1)
   show heading: it => {
     if it.level == 1 {
+      // https://forum.typst.app/t/how-to-correctly-format-the-heading-number-and-figure-number-in-the-figures-caption/4856/3
+      for outline-args in extra-outlines {
+        counter(outline-args.at("target")).update((0,))
+      }
+      //counter(figure.where(kind: image)).update((0,))
       // https://github.com/typst/typst/discussions/3122
       state("content.switch").update(false)
       pagebreak(weak: true, to:"odd")
@@ -262,7 +275,7 @@
       let label-annexe = <annexe>
       let is-set-annexe = state("is-set-annexe", false)
       if it.element.supplement == [Hidden] {none}
-      else if it.element.level == 1 {
+      else if it.element.has("level") and it.element.level == 1 {
         context if not is-set-annexe.get() {
           let found = query(selector(label-annexe).before(it.element.location()))
           if found.len() > 0 {
@@ -289,7 +302,7 @@
   else {
     outline-entry-function = it => {
       if it.element.supplement == [Hidden] {none}
-      else if it.element.level == 1 {
+      else if it.element.has("level") and it.element.level == 1 {
         show repeat: none
         v(1em)
         strong(it)
@@ -300,8 +313,12 @@
     }
   }
   show outline.entry: outline-entry-function
-  heading(level: 1)[Tabla de contenidos]
-  outline(title: none)
+  //heading(level: 1)[Tabla de contenidos]
+  //outline(title: none)
+  outline(title: index-title)
+  for outline-args in extra-outlines {
+    outline(..outline-args)
+  }
   
   // Configuration V (body)
   set heading(numbering: "1.", supplement: [Capítulo])
@@ -351,7 +368,7 @@
   }
 
   // Resetting things for the rest of the document
-  show heading.where(level: 1): set heading(numbering: none, supplement: "Bibliografía")
+  show heading.where(level: 1): set heading(numbering: none)
   counter(heading).update(0)
   
   // References
