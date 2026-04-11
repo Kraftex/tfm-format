@@ -45,6 +45,14 @@ description = "Create a new PDF from pieces of another one (example: file.pdf 1,
 cmd = "mutool merge -o merge.pdf"
 description = "Create a new PDF merging other ones (example: file.pdf secret.pdf)"
 
+[tasks.zip-update]
+cmd = "./functions.sh zip-update"
+description = "Update contents of this project from a zip from Typst website (example: file.zip)"
+
+[tasks.count-refs]
+cmd = "./functions.sh count-refs"
+description = "Count bibliography uses of the entries"
+
 ## Uncomment this if you want to compile typst
 #[tasks.start]
 #cmd = "cargo install --locked typst-cli"
@@ -60,3 +68,4 @@ description = "Create a new PDF merging other ones (example: file.pdf secret.pdf
 #openssl = ">=3.6.1,<4"
 typst = ">=0.14.2,<0.15"
 mupdf = ">=1.27.2,<2"
+jq = ">=1.8.1,<2"
