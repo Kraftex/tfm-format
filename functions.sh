@@ -80,23 +80,23 @@ zip-update()
     return 1
   fi
   local zipdir=$(mktemp -d)
-  unzip "$zipfile" -d "$zipdir"
+  unzip "$zipfile" -d "$zipdir" &> /dev/null
   while read file
   do
-    file=${file//$zipdir\//}
+    file=${file##$zipdir/}
     local curfile="$cmpdir/$file"
     local newfile="$zipdir/$file"
     if ! [[ -e "$curfile" ]]; then
       if .check.bool.prompt "Copy new ${file}?"; then
         cp "$newfile" "$curfile"
       fi
-    elif ! cmp "$curfile" "$newfile"; then
+    elif ! cmp "$curfile" "$newfile" &> /dev/null; then
       if .check.bool.prompt "Override ${file}?"; then
         cp "$newfile" "$curfile"
       fi
     fi
   done < <(find "$zipdir" -type f)
-  rm -rf "$zipdir"
+  #rm -rf "$zipdir"
 }
 
 if .has.function "$1"; then

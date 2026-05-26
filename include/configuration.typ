@@ -368,7 +368,7 @@
   }
 
   // Resetting things for the rest of the document
-  show heading.where(level: 1): set heading(numbering: none)
+  show heading.where(level: 1): set heading(numbering: none, supplement: "Bibliografía")
   counter(heading).update(0)
   
   // References
