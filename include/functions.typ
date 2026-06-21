@@ -153,3 +153,12 @@
 #let wrtnums = ("cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez")
 #let num2wrt(num) = wrtnums.at(num)
 #let wrtcaps = context num2wrt(query(heading.where(supplement: [Capítulo], level: 1)).len())
+
+#let entry(indent: 1em, body) = {
+  h(indent)
+  strong[#body]
+}
+
+// https://forum.typst.app/t/is-there-a-way-to-remove-footnotes-from-the-outline/3303/18
+#let show-footnote = state("show-footnote", (true,))
+#let footnote(..args) = context if show-footnote.get().last() { std.footnote(..args) }

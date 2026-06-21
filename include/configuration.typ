@@ -313,8 +313,17 @@
     }
   }
   show outline.entry: outline-entry-function
-  //heading(level: 1)[Tabla de contenidos]
-  //outline(title: none)
+
+  // This solves the problem with footnotes on outlines.
+  // You must include functions.typ and footnote function to override footnote default function.
+  // https://forum.typst.app/t/is-there-a-way-to-remove-footnotes-from-the-outline/3303/18
+  let clean-footnote(it) = context {
+    show-footnote.update(stack => (..stack,false))
+    it
+    show-footnote.update(stack => stack.slice(0,-1))
+  }
+  show outline: clean-footnote
+  
   outline(title: index-title)
   for outline-args in extra-outlines {
     outline(..outline-args)

@@ -68,10 +68,10 @@
   //    The following targets are useful:
   //    - Para las imágenes:  figure.where(kind: image)
   //    - Para las tablas:    figure.where(kind: table)
-  //extra-outlines: ( // Ejemplo
-  //  (title: [Índice de figuras], target: figure.where(kind: image)),
-  //  (title: [Índice de tablas], target: figure.where(kind: table)),
-  //),
+  extra-outlines: ( // Ejemplo
+    (title: [Índice de figuras], target: figure.where(kind: image)),
+    (title: [Índice de tablas], target: figure.where(kind: table)),
+  ),
   
   // author-pretext: Pretext that introduce author name
   author-pretext: "Autor(a)",
